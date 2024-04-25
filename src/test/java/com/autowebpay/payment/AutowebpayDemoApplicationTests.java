@@ -85,7 +85,7 @@ class AutowebpayDemoApplicationTests {
         headers.set("X-TIMESTAMP", timestamp); // 请求时间戳
         headers.set("X-ALG", md5);
 
-        System.out.println("propertie".concat(":").concat(propertie).concat("===").concat(md5));
+        System.out.println("参数加密拼接顺序:".concat(propertie).concat("MD5值：").concat(md5));
 
     }
 

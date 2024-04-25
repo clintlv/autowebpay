@@ -197,7 +197,7 @@ public class payController {
      * @param param 请求参数，键值对形式
      * @return 返回下单请求的响应实体，可能包含订单信息或其他相关数据
      */
-    private static ResponseEntity<String> getStringResponseEntity(HashMap<String, String> param) {
+    public static ResponseEntity<String> getStringResponseEntity(HashMap<String, String> param) {
         // 设置请求头，包含必须的识别信息和时间戳等
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
@@ -205,7 +205,9 @@ public class payController {
         headers.set("X-TOKEN", X_TOKEN); // 商户识别token
         final String timestamp = String.valueOf(System.currentTimeMillis());
         headers.set("X-TIMESTAMP", timestamp); // 请求时间戳
-        // 生成请求密文 X-ALG 请求密文的格式为: 按顺序拼接 sign,timestamp,参数组合(参数组合为请求参数的属性名首字母排序后 , 进行值拼接) 后 , 进行md5运算
+
+        //X-ALG 请求密文的格式需按顺序拼接: 拼接顺序为 sign + timestamp + 参数组合(参数组合为请求参数的key首字母排序后,value值进行拼接)进行md5运算
+        //例如：sign=123,timestamp=456,b=8&a=7&c=9 拼接后：123456789
         final String propertie = param.keySet().stream()
                 .sorted(Comparator.comparing(s -> s.substring(0, 1)))
                 .map(param::get)
@@ -242,7 +244,7 @@ public class payController {
      * @param length 需要生成的随机数字字符串的长度。
      * @return 生成的随机数字字符串。
      */
-    private static String generateRandomNumber(int length) {
+    public static String generateRandomNumber(int length) {
         Random random = new Random(); // 创建随机数生成器
         StringBuilder sb = new StringBuilder(); // 创建StringBuilder用于拼接随机数字
 

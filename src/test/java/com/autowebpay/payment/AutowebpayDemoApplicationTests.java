@@ -10,11 +10,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.TimeZone;
 import java.util.stream.Collectors;
 
 import static com.autowebpay.payment.demos.web.payController.generateRandomNumber;
@@ -42,7 +48,7 @@ class AutowebpayDemoApplicationTests {
         payOrderNotifyDTO.setTransactionDate(new Date());
         payOrderNotifyDTO.setFailureDesc(null);
         HttpEntity<PayOrderNotifyDTO> requestEntity = new HttpEntity<>(payOrderNotifyDTO);
-        ResponseEntity<String> responseEntity = new RestTemplate().exchange("http://127.0.0.1:8080/pay/callback", HttpMethod.POST, requestEntity, String.class);
+        ResponseEntity<String> responseEntity = new RestTemplate().exchange("https://mrphper.site/autowebpay_redirect-webhook/", HttpMethod.POST, requestEntity, String.class);
         final String result = responseEntity.getBody();
         log.info("订单通知结果：{}", result);
     }
@@ -86,6 +92,63 @@ class AutowebpayDemoApplicationTests {
         headers.set("X-ALG", md5);
 
         System.out.println("参数加密拼接顺序:".concat(propertie).concat("MD5值：").concat(md5));
+
+    }
+
+    @Test
+    void NotificationFeedback() throws IOException {
+        //获取gmt+0的时间
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("GMT+9"));
+        String GMT_Time = dateFormat.format(new Date());
+        System.out.println(GMT_Time);
+
+
+
+    }
+
+    @Test
+    void QueryNotification() throws IOException {
+        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        String urlStr = "https://cbalert.test.wintranx.com/winshield/api/v2";
+        String data = "{\n" +
+                "    \"version\": \"2.0\",\n" +
+                "    \"format\": \"JSON\",\n" +
+                "    \"queryDate\": \"2024-05-15\"\n" +
+                "}";
+        URL url = new URL(urlStr);
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("POST");
+        connection.setDoInput(true);
+        connection.setDoOutput(true);
+
+        connection.setRequestProperty("content-type","application/json");
+        connection.setRequestProperty("action","QueryNotification");
+        connection.setRequestProperty("x-winshield-signature","OTEzOWEzOTRlMGY1NzAwYzk4NDFmZjFjZjUyZjBlY2NlMjMxNTM4ZTA1OGJmZTlmY2ViNjA4ZTRmODkzZWRkNA==");
+        connection.setRequestProperty("Authorization","Basic MTAxNjU6ekRYZFNRT3k3RHh6dm1aUlFRc1ZlNzVadTBhdG5Ed2g=");
+        connection.setRequestProperty("x-winshield-timestamp",timestamp);
+
+        connection.connect();
+
+        OutputStream outputStream = connection.getOutputStream();
+        outputStream.write(data.getBytes(StandardCharsets.UTF_8));
+
+        outputStream.flush();
+
+        InputStream is = connection.getInputStream();
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+        String line;
+        StringBuilder stringBuilder = new StringBuilder();
+
+        while ((line = reader.readLine()) != null) {
+            stringBuilder.append(line);
+        }
+
+        outputStream.close();
+        is.close();
+        reader.close();
+        System.out.println(stringBuilder);
 
     }
 

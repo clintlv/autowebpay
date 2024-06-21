@@ -85,4 +85,15 @@ public class PayOrderNotifyDTO implements Serializable {
      * 支付渠道返回的错误信息
      */
     private String failureDesc;
+
+    /**
+     * 令牌支付id
+     */
+    private String token;
+
+
+    /**
+     * 签名
+     */
+    private String signature;
 }

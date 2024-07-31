@@ -264,6 +264,66 @@ __注意事项__ :
 
 <div STYLE="page-break-after: always;"></div>
 
+## 4.退款接口（全额退）
+
+> method: POST
+>
+> path: /merchant-api/v2/3/refund
+>
+> Content-Type: application/json
+>
+> 请求示例
+>
+> https://test-api.autowebpay.com/merchant-api/v2/3/refund
+>
+>  ```json
+> {
+>   "orderNo": "0102020072A2024072915",
+>   "timestamp": 1718879359505
+> }
+> ```
+
+#### 请求参数
+
+| 名称           | 类型     |必选| 说明                                  |
+|--------------|--------|---|-------------------------------------|
+| orderNo      | string | 是 | 平台订单id（tranNo）     |
+| timestamp    | string | 是 | 时间戳需要和请求头X-TIMESTAMP一致              |        |
+
+#### 响应参数
+
+| 参数名               | 类型              | 必选 | 描述                          |
+|:------------------|:----------------|:---|:----------------------------|
+| status            | String          | Y  | 状态码成功200                    |
+| message           | String          | N  | 响应信息，Success或错误提示语          |
+| data              | OrderResponseVo | N  | 数据                          |
+| merchantOrderNo   | String          | Y  | 商户订单id（关联订单号）               |
+| tranNo            | String          | Y  | 平台订单id                      |
+| refundAmount      | Long            | Y  | 退款金额                        |
+| refundStatus      | Integer         | Y  | 订单退款状态 (1-退款中,2-已退款,3-退款失败) |
+| refundOrderNo     | String          | Y  | 退款订单号                       |
+| signature         | String          | Y  | 验签                          |
+
+<div STYLE="page-break-after: always;"></div>
+
+> 成功示例
+
+```json
+{
+  "message": "Success",
+  "data": {
+    "merchantOrderNo": "S202402725095895944DEV",
+    "refundAmount": "40.00",
+    "refundOrderNo": "T20240731161605828269",
+    "refundStatus": 2,
+    "signature": "996dc95c45ea688435acbcafaf4fe618",
+    "tranNo": "0354064784A2024073018"
+  },
+  "status": "200"
+}
+```
+
+<div STYLE="page-break-after: always;"></div>
 
 
 ## 5.api错误信息

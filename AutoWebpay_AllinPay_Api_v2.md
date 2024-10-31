@@ -184,13 +184,13 @@ __4.回调地址__ : 商户在收到平台派发的账号信息后 , 应到对�
 
 > method: POST
 >
-> path: /merchant-api/v2/6/createOrder
+> path: /merchant-api/v2/8/createOrder
 >
 > Content-Type: application/json
 > 
 > 请求示例
 >
-> https://test-api.autowebpay.com/merchant-api/v2/6/createOrder
+> https://test-api.autowebpay.com/merchant-api/v2/8/createOrder
 > 
 >  ```json
 > {
@@ -213,8 +213,6 @@ __4.回调地址__ : 商户在收到平台派发的账号信息后 , 应到对�
 | timestamp    | string   | 是   | 时间戳需要和请求头X-TIMESTAMP一致              |        |
 | email        | string   | 是   | 邮箱                                  |
 | ip           | string   | 是   | 用户请求IP地址                            |
-| firstName    | string   | 是   | 名字                               |
-| lastName     | string   | 是   | 姓氏                             |
 
 #### 响应参数
 
@@ -278,13 +276,13 @@ __注意事项__ :
 
 > method: POST
 >
-> path: /merchant-api/v2/6/refund
+> path: /merchant-api/v2/8/refund
 >
 > Content-Type: application/json
 >
 > 请求示例
 >
-> https://test-api.autowebpay.com/merchant-api/v2/6/refund
+> https://test-api.autowebpay.com/merchant-api/v2/8/refund
 >
 >  ```json
 > {
@@ -358,50 +356,6 @@ __注意事项__ :
 | MER1019   | ORDER NOT EXIST!                                 | 订单不存在！                  |
 | MER1020   | STORED TOKEN ERROR!                              | 存储令牌错误！                 |
 
-
-## 5.1 系统错误码
-| 错误码 | 错误描述                |
-| ------ |---------------------|
-| 2001   | 长度超限                |
-| 2002   | 不能为空或缺失参数           |
-| 2003   | 格式不正确               |
-| 2101   | 商户不存在或未初始化          |
-| 2102   | 商户未激活               |
-| 2103   | 商户合同已过期             |
-| 2104   | 商户支付类型未激活           |
-| 2105   | 商户该币种不支持            |
-| 2106   | 加密验证失败              |
-| 2107   | 商户支付方式未激活           |
-| 2108   | 报文参数长度不在 0-10000 之间 |
-| 2109   | 非 80 端口             |
-| 2110   | 支付页面不存在             |
-| 2201   | 订单单笔金额太小            |
-| 2202   | 超出风控限次              |
-| 2203   | 超出风控限额              |
-| 2204   | 风控拦截                |
-| 2205   | 订单单笔金额太大            |
-| 2301   | 收单机构不存在或未启用         |
-| 2401   | 内部错误                |
-| 2402   | 请求报文无法解析            |
-| 1001   | 交易成功                |
-| 1002   | 交易失败                |
-| 1003   | 交易处理中               |
-| 1004   | 交易超时                |
-| 1005   | 订单不存在               |
-| 1101   | 余额不足                |
-| 1102   | 黑卡交易                |
-| 1103   | 无效卡号                |
-| 1104   | 拒绝交易                |
-| 1105   | 丢失卡/盗卡              |
-| 1106   | 过期卡/限制卡             |
-| 1107   | 安全码错误               |
-| 1108   | 无效交易                |
-| 1109   | 高风险交易               |
-| 1110   | 请咨询发卡行              |
-| 1111   | 其他错误                |
-| 1112   | 重复交易                |
-| 1113   | 超出银行限额              |
-| 1114   | 卡片未激活               |
 
 <div STYLE="page-break-after: always;"></div>
 

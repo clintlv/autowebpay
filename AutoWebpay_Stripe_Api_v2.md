@@ -205,7 +205,9 @@ __4.回调地址__ : 商户在收到平台派发的账号信息后 , 应到对�
 >   "payAmount": "4000",
 >   "currencyType": "USD",
 >   "extendData": "",
->   "timestamp": 1718879359505
+>   "timestamp": 1718879359505,
+>   "storedId": "token",
+>   "ip":"101.44.82.72"
 > }
 > ```
 
@@ -219,6 +221,7 @@ __4.回调地址__ : 商户在收到平台派发的账号信息后 , 应到对�
 | extendData   | string | 否 | 扩展数据 (用于商户扩展信息,支付完成后会完整返回,最大长度4096) |
 | timestamp    | string | 是 | 时间戳需要和请求头X-TIMESTAMP一致              |        |
 | storedId     | string | 否 | 记卡id(记卡返回的token)                    |        |
+| ip           | string   | 是   | 用户真实请求IP地址                          |
 
 #### 响应参数
 
